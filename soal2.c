@@ -5,13 +5,14 @@
 pthread_t treat[10];
 char pem1[100], pem2[100];
 int skor1=0, skor2=0, a, status;
+int lub1[16], lub2[16];
 void *namaewa() {
     status=0;
     printf("Masukkan nama pemain1: ");
     gets(pem1);
     printf("Masukkan nama pemain2: ");
     gets(pem2);
-    status++;
+    status=1;
 }
 
 void cetakskor() {
@@ -19,7 +20,6 @@ void cetakskor() {
     printf("Skor "); puts(pem2); printf(": %d\n",skor2);
 }
 void *isi(int *lub) {
-    while(status!=1||status!=2) {}
     int jum, temp;
     while(1) {
         printf("mau mengisi berapa lubang?? ");
@@ -41,11 +41,9 @@ void *isi(int *lub) {
         }
         }
     }
-    status++;
 }
 
 void *tebak(int *lub) {
-    while(status!=3||status!=4) {}
     int tebak;
     for(int i=0;i<4;i++) {
         printf("Masukkan posisi lubang yang ingin ditebak ");
@@ -66,7 +64,6 @@ void *tebak(int *lub) {
         }
         cetakskor();
     }
-    status++;
 }
 
 void *ceklub(int *lub) {
@@ -74,19 +71,45 @@ void *ceklub(int *lub) {
     for(int i=0;i<16;i++) {
         if(lub[i]==1) a++;
     }
-    status++;
+}
+
+void pemain1() {
+    while(status<1) {}
+    isi(lub1);
+    status=2;
+    while(status<3) {}
+    tebak(lub1);
+    status=4;
+    while(status<5) {}
+    ceklub(lub1);
+    status=6;
+}
+
+void pemain2() {
+    while(status<2) {}
+    isi(lub2);
+    status=3;
+    while(status<4) {}
+    tebak(lub2);
+    status=5;
+    while(status<6) {}
+    ceklub(lub2);
+    status=7;
 }
 
 int main()
 {
-    int lub1[16], lub2[16];
     int err;
     while(1) {
             a=0;
             //status=0;
             err=pthread_create( &(treat[0]), NULL, &namaewa, NULL);
             if(err) printf("error ma bro\n");
-            err=pthread_create( &(treat[1]), NULL, &isi, (int*) lub1);
+            err=pthread_create( &(treat[1]), NULL, &pemain1, NULL);
+            if(err) printf("error ma bro\n");
+            err=pthread_create( &(treat[2]), NULL, &pemain2, NULL);
+            if(err) printf("error ma bro\n");
+            /*err=pthread_create( &(treat[1]), NULL, &isi, (int*) lub1);
             if(err) printf("error ma bro\n");
             err=pthread_create( &(treat[2]), NULL, &isi, (int*) lub2);
             if(err) printf("error ma bro\n");
@@ -97,15 +120,15 @@ int main()
             err=pthread_create( &(treat[5]), NULL, &ceklub, (int*) lub1);
             if(err) printf("error ma bro\n");
             err=pthread_create( &(treat[6]), NULL, &ceklub, (int*) lub2);
-            if(err) printf("error ma bro\n");
+            if(err) printf("error ma bro\n");*/
 
             pthread_join(treat[0],NULL);
             pthread_join(treat[1],NULL);
             pthread_join(treat[2],NULL);
-            pthread_join(treat[3],NULL);
+            /*pthread_join(treat[3],NULL);
             pthread_join(treat[4],NULL);
             pthread_join(treat[5],NULL);
-            pthread_join(treat[6],NULL);
+            pthread_join(treat[6],NULL);*/
             if(a==32||skor1==10||skor2==10) {
             printf("permainan selesai. \n");
             break;
