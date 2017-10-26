@@ -23,6 +23,7 @@ void *reductionloh() {
 
 void *seken() {
    while(1) {
+    printf("1. Beri makan kepiting \n 2. Beri makan lohan \n Masukkan angka: ");
     if(scanf("%d",&at) != 1) {
 	printf("input harus angka\n");
 	at=0;
