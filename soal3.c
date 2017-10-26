@@ -20,10 +20,18 @@ void *reductionloh() {
         statusloh-=15;
    }
 }
+void printstatus() {
+  printf("Kepiting: %d",statuskep);
+  if(statuskep<50) printf("(lapar)   ");
+  else printf("(kenyang)   ");
+  printf("Lohan: %d",statusloh);
+  if(statusloh<50) printf("(lapar)\n");
+  else printf("(kenyang)\n");
+}
 
 void *seken() {
    while(1) {
-    printf("kepiting: %d  lohan: %d \n",statuskep,statusloh);
+    printstatus();
     printf("1. Beri makan kepiting \n2. Beri makan lohan \n Masukkan angka: ");
     if(scanf("%d",&at) != 1) {
 	printf("input harus angka\n");
