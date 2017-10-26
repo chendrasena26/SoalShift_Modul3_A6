@@ -22,5 +22,8 @@ void *cek() {
 }
 int main()
 {
-
+    int err;
+    err=pthread_create(&(tid[0]),NULL,&cek,NULL);
+    if(err) printf("error ma bro\n");
+    return 0;
 }
