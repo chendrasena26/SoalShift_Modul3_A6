@@ -23,7 +23,10 @@ void *reductionloh() {
 
 void *seken() {
    while(1) {
-    scanf("%d",&at);
+    if(scanf("%d",&at)) != 1) {
+	printf("input harus angka\n");
+	at=0;
+	}
     //fflush(stdin);
     if(at==1) statuskep+=10;
     else if(at==2) statusloh+=10;
