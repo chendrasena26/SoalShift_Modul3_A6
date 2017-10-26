@@ -43,7 +43,7 @@ void *isi(int *lub) {
     }
 }
 
-void *tebak(int *lub) {
+void *tebak(int *lub, int skordua, int skorsatu) {
     int tebak;
     for(int i=0;i<4;i++) {
         printf("Masukkan posisi lubang yang ingin ditebak ");
@@ -56,11 +56,11 @@ void *tebak(int *lub) {
         }
         if(lub[tebak-1]==1) {
             printf("Anda benar! Skor anda ditambah 1\n");
-            skor2++;
+            skordua++;
         }
         else {
             printf("Anda salah, skor lawan ditambah 1\n");
-            skor1++;
+            skorsatu++;
         }
         cetakskor();
     }
@@ -78,7 +78,7 @@ void pemain1() {
     isi(lub1);
     status=2;
     while(status<3) {}
-    tebak(lub1);
+    tebak(lub1, skor1, skor2);
     status=4;
     while(status<5) {}
     ceklub(lub1);
@@ -90,7 +90,7 @@ void pemain2() {
     isi(lub2);
     status=3;
     while(status<4) {}
-    tebak(lub2);
+    tebak(lub2, skor2, skor1);
     status=5;
     while(status<6) {}
     ceklub(lub2);
@@ -102,7 +102,7 @@ int main()
     int err;
     while(1) {
             a=0;
-            //status=0;
+            status=0;
             err=pthread_create( &(treat[0]), NULL, &namaewa, NULL);
             if(err) printf("error ma bro\n");
             err=pthread_create( &(treat[1]), NULL, &pemain1, NULL);
