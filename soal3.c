@@ -7,7 +7,7 @@ int statuskep=100;
 int statusloh=100;
 int status=100;
 int at=0;
-
+//hehe
 void *reductionkep() {
    while(statuskep>0||statuskep<=100) {
         sleep(1);
