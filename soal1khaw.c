@@ -5,18 +5,22 @@
 
 void main()
 {
-        key_t key = 1234;
-        int *value;
-
-        int shmid = shmget(key, sizeof(int), IPC_CREAT | 0666);
-        value = shmat(shmid, NULL, 0);
-
-        printf("Program 1 : %d\n", *value);
-	*value = 30;
-
-        sleep(5);
-
-        printf("Program 1: %d\n", *value);
-        shmdt(value);
+	key_t key = 1234;
+        int *setok, masuk, jumlah;
+        char inputan[100];
+        char barang[6][100]={"M4A1","PM2-V1","SPR-3","SS2-V5","SPG1-V3","MINE"};
+        int shmid = shmget(key, 6*sizeof(int), IPC_CREAT | 0666);
+        setok = (int*) shmat(shmid, NULL, 0);
+        printf("BUAT PENJUAL HEHE\n\n");
+        while(1) {
+        printf("Mau ngapain Khaw?\n 1. Lihat Stok Senjata     2. Tambah Stok Senjata\n");
+        printf("Inputan Anda: "); scanf("%d",&masuk);
+        if(masuk==1) {
+            for(int i=0;i<6;i++) {
+                if(setok[i]>0) printf("Stok %s : %d\n",barang[i],setok[i]);
+            }
+        }
+	}
+        shmdt(setok);
         shmctl(shmid, IPC_RMID, NULL);
 }
