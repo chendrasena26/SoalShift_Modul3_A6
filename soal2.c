@@ -67,7 +67,6 @@ void tebak(int *lub, int *skorsatu, int *skordua) {
 }
 
 void ceklub(int *lub) {
-    while(status!=5||status!=6) {}
     for(int i=0;i<16;i++) {
         if(lub[i]==1) a++;
     }
