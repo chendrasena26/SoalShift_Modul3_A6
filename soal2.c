@@ -3,7 +3,7 @@
 #include<stdlib.h>
 #include<unistd.h>
 pthread_t treat[10];
-char pem1[100], pem2[100], hehe;
+char pem1[100], pem2[100];
 int skor1, skor2, a, status;
 int lub1[16], lub2[16];
 void namaewa() {
