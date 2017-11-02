@@ -20,6 +20,16 @@ void main()
                 if(setok[i]>0) printf("Stok %s : %d\n",barang[i],setok[i]);
             }
         }
+	else if(masuk==2) {
+            printf("Mau stok ulang yang mana bos? ");
+            scanf("%s",&inputan); scanf("%d",&jumlah);
+            for(int j=0;j<6;j++) {
+                if(!strcmp(inputan,barang[j])) {
+                    setok[j]=setok[j]+jumlah;
+                    printf("Stok ulang berhasil! Sekarang stok %s menjadi %d\n",barang[j],setok[j]);
+                }
+            }
+        }
 	}
         shmdt(setok);
         shmctl(shmid, IPC_RMID, NULL);
