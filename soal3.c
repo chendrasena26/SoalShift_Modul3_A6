@@ -13,7 +13,7 @@ void *reductionkep() {
         sleep(1);
         statuskep-=10;
    }
-	status=0;
+	return 0;
 }
 
 void *reductionloh() {
@@ -21,7 +21,7 @@ void *reductionloh() {
         sleep(1);
         statusloh-=15;
    }
-	status=0;
+	return 0;
 }
 void printstatus() {
   printf("Kepiting: %d",statuskep);
@@ -36,7 +36,7 @@ void *seken() {
    while(statuskep>=0||statusloh>=0) {
     printstatus();
     printf("1. Beri makan kepiting \n2. Beri makan lohan \n Masukkan angka: ");
-    while(status!=0||at==0) scanf("%d",&at);
+    scanf("%d",&at);
     if(at==1) statuskep+=10;
     else if(at==2) statusloh+=10;
    if(statuskep<=0||statuskep>100||statusloh<=0||statusloh>100) break;

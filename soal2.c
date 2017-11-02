@@ -19,7 +19,7 @@ void cetakskor() {
     printf("Skor "); puts(pem1); printf(": %d\n",skor1);
     printf("Skor "); puts(pem2); printf(": %d\n",skor2);
 }
-void isi(int *lub) {
+void isi(int lub[]) {
     int jum, temp;
     while(1) {
         printf("mau mengisi berapa lubang?? ");
@@ -43,7 +43,7 @@ void isi(int *lub) {
     }
 }
 
-void tebak(int *lub, int *skorsatu, int *skordua) {
+void tebak(int lub[], int *skorsatu, int *skordua) {
     int tebak;
     for(int i=0;i<4;i++) {
         printf("Masukkan posisi lubang yang ingin ditebak ");
@@ -66,8 +66,9 @@ void tebak(int *lub, int *skorsatu, int *skordua) {
     }
 }
 
-void ceklub(int *lub) {
+void ceklub(int lub[]) {
     for(int i=0;i<16;i++) {
+	printf("%d ",lub[i]);
         if(lub[i]==1) a++;
     }
 }
@@ -80,7 +81,7 @@ void* pemain1() {
     isi(lub1);
     status=2;
     while(status<3) {}
-    tebak(lub1,skorsatu,skordua);
+    tebak(lub2,skorsatu,skordua);
     status=4;
     while(status<5) {}
     ceklub(lub1);
@@ -95,8 +96,9 @@ void* pemain2() {
     isi(lub2);
     status=3;
     while(status<4) {}
-    tebak(lub2,skordua,skorsatu);
+    tebak(lub1,skordua,skorsatu);
     status=5;
+	printf("hehe");
     while(status<6) {}
     ceklub(lub2);
     status=7;
