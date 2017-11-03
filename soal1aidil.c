@@ -29,7 +29,13 @@ void main()
                         setok[j]=setok[j]-jumlah;
                         printf("Pembelian berhasil! Sekarang stok %s menjadi %d\n",barang[j],setok[j]);
                         }
-                    else printf("Barang di stok tidak cukup ma bro\n");
+                    else {
+			jumlah=jumlah-setok[j];
+			int temp=setok[j];
+			setok[j]=0;
+			printf("Senjata %s berhasil terbeli %d buah\n",barang[j],temp);
+			printf("Maaf %d sisanya tidak dapat dibeli hehe\n",jumlah);
+			}
                     }
                 }
             }
