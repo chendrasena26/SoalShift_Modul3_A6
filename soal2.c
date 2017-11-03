@@ -4,7 +4,8 @@
 #include<unistd.h>
 pthread_t treat[10];
 char pem1[100], pem2[100];
-int skor1, skor2, a, status;
+int minesatu, minedua;
+int skor1, skor2, a, status=0;
 int lub1[16], lub2[16];
 void namaewa() {
     status=0;
@@ -21,13 +22,22 @@ void cetakskor() {
 }
 void isi(int lub[]) {
     int jum, temp;
+	if(minedua>16||skor1>=10||skor2>=10||minesatu>16);
+	else {
+	if(status==1) printf("Giliran Pemain 1\n");
+	else if(status==2) printf("Giliran Pemain 2\n");
     while(1) {
         printf("mau mengisi berapa lubang?? ");
         scanf("%d",&jum);
-        if(jum<5) break;
+        if(jum<5) {
+	if(status==1) minesatu+=jum;
+	else if(status==2) minedua+=jum;
+	break;
+	}
         else printf("Kebanyakan. Hanya boleh 1 sampai 4 hehe\n");
     }
     while(jum--) {
+	if(minesatu>16||minedua>16) break;
         printf("masukkan posisi lubang yang ingin dimasukkan MINE ");
         while(1) {
         scanf("%d",&temp);
@@ -40,22 +50,30 @@ void isi(int lub[]) {
             }
         }
         }
+	}
     }
 }
 
 void tebak(int lub[], int *skorsatu, int *skordua) {
     int tebak;
+	if(minedua>16||skor1>=10||skor2>=10||minesatu>16);
+	else {
+    if(status==3) printf("Giliran Pemain 1\n");
+        else if(status==4) printf("Giliran Pemain 2\n");
     for(int i=0;i<4;i++) {
-        printf("Masukkan posisi lubang yang ingin ditebak ");
+	if(skor1==10||skor2==10) break;
         while(1) {
+	    printf("Masukkan posisi lubang yang ingin ditebak: ");
             scanf("%d",&tebak);
             if(tebak<1 || tebak>16) {
-                printf("Posisi lubang tak ada, ulangi input \n");
+                printf("Posisi lubang tak ada, ulangi input\n");
             }
+	    else if(lub[tebak-1]==2) printf("lubang sudah pernah ditebak hehe\n");
             else break;
         }
         if(lub[tebak-1]==1) {
             printf("Anda benar! Skor anda ditambah 1\n");
+		lub[tebak-1]+=1;
             *skorsatu+=1;
         }
         else {
@@ -63,45 +81,38 @@ void tebak(int lub[], int *skorsatu, int *skordua) {
             *skordua+=1;
         }
         cetakskor();
-    }
-}
-
-void ceklub(int lub[]) {
-    for(int i=0;i<16;i++) {
-	printf("%d ",lub[i]);
-        if(lub[i]==1) a++;
+	}
     }
 }
 
 void* pemain1() {
+	while(1) {
+	if(minedua>16||skor1>=10||skor2>=10||minesatu>16) break;
     int *skorsatu,*skordua;
     skorsatu=&skor1;
     skordua=&skor2;
-    while(status<1) {}
+    while(status!=1) {}
     isi(lub1);
     status=2;
-    while(status<3) {}
+    while(status!=3) {}
     tebak(lub2,skorsatu,skordua);
     status=4;
-    while(status<5) {}
-    ceklub(lub1);
-    status=6;
+	}
 }
 
 void* pemain2() {
+	while(1) {
+	if(minedua>16||skor1>=10||skor2>=10||minesatu>16) break;
     int *skorsatu,*skordua;
     skorsatu=&skor1;
     skordua=&skor2;
-    while(status<2) {}
+    while(status!=2) {}
     isi(lub2);
     status=3;
-    while(status<4) {}
+    while(status!=4) {}
     tebak(lub1,skordua,skorsatu);
-    status=5;
-	printf("hehe");
-    while(status<6) {}
-    ceklub(lub2);
-    status=7;
+	status=1;
+	}
 }
 
 int main()
@@ -109,9 +120,6 @@ int main()
     int err;
     err=pthread_create( &(treat[0]), NULL, &namaewa, NULL);
     if(err) printf("error ma bro\n");
-    while(1) {
-            a=0;
-            status=0;
             err=pthread_create( &(treat[1]), NULL, &pemain1, NULL);
             if(err) printf("error ma bro\n");
             err=pthread_create( &(treat[2]), NULL, &pemain2, NULL);
@@ -120,9 +128,5 @@ int main()
             pthread_join(treat[0],NULL);
             pthread_join(treat[1],NULL);
             pthread_join(treat[2],NULL);
-            if(a==32||skor1==10||skor2==10) {
-            printf("permainan selesai. \n");
-            break;
-        }
-    }
+		return 0;
 }
